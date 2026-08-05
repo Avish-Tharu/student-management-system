@@ -1,13 +1,15 @@
+import java.sql.Connection;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("--------------------------------");
-        System.out.println("Student Management System");
-        System.out.println("--------------------------------");
+        Connection connection = DatabaseConnection.getConnection();
 
-        System.out.println("Application Started Successfully");
-
+        if (connection != null) {
+            System.out.println("Database connection is working!");
+        } else {
+            System.out.println("Database connection failed!");
+        }
     }
-
 }
