@@ -82,8 +82,8 @@ public static void showMainMenu() {
                 break;
 
             case 2:
-                System.out.println("View Students - Coming Soon");
-                break;
+    ViewStudentService.viewStudents();
+    break;
 
             case 3:
                 System.out.println("Search Student - Coming Soon");
