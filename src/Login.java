@@ -86,8 +86,15 @@ public static void showMainMenu() {
     break;
 
             case 3:
-                System.out.println("Search Student - Coming Soon");
-                break;
+
+    System.out.print("\nEnter Student ID: ");
+
+    int studentId = scanner.nextInt();
+    scanner.nextLine();
+
+    SearchStudentService.searchStudent(studentId);
+
+    break;
 
             case 4:
                 System.out.println("Update Student - Coming Soon");
