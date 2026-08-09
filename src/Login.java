@@ -122,8 +122,24 @@ public static void showMainMenu() {
     break;
 
             case 5:
-                System.out.println("Delete Student - Coming Soon");
-                break;
+
+    System.out.print("\nEnter Student ID: ");
+    int deleteStudentId = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print("Are you sure you want to delete this student? (Y/N): ");
+    String confirmation = scanner.nextLine();
+
+    if (confirmation.equalsIgnoreCase("Y")) {
+
+        DeleteStudentService.deleteStudent(deleteStudentId);
+
+    } else {
+
+        System.out.println("\n❌ Delete cancelled.");
+    }
+
+    break;
 
             case 6:
                 System.out.println("Logged out successfully.");
