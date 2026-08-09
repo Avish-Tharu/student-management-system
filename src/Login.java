@@ -97,8 +97,29 @@ public static void showMainMenu() {
     break;
 
             case 4:
-                System.out.println("Update Student - Coming Soon");
-                break;
+
+    System.out.print("\nEnter Student ID: ");
+    int updateStudentId = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print("New Email: ");
+    String email = scanner.nextLine();
+
+    System.out.print("New Phone: ");
+    String phone = scanner.nextLine();
+
+    System.out.print("New Course ID: ");
+    int courseId = scanner.nextInt();
+    scanner.nextLine();
+
+    UpdateStudentService.updateStudent(
+           updateStudentId,
+            email,
+            phone,
+            courseId
+    );
+
+    break;
 
             case 5:
                 System.out.println("Delete Student - Coming Soon");
