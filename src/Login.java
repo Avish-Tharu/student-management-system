@@ -64,12 +64,12 @@ public static void showMainMenu() {
         System.out.println("            MAIN MENU");
         System.out.println("=================================");
         System.out.println("1. Add Student");
-        System.out.println("2. View Students");
-        System.out.println("3. Search Student");
-        System.out.println("4. Update Student");
-        System.out.println("5. Delete Student");
-        System.out.println("6. Logout");
-
+System.out.println("2. View Students");
+System.out.println("3. Search Student");
+System.out.println("4. Update Student");
+System.out.println("5. Delete Student");
+System.out.println("6. Course Management");
+System.out.println("7. Logout");
         System.out.print("\nEnter your choice: ");
 
         int choice = scanner.nextInt();
@@ -140,10 +140,15 @@ public static void showMainMenu() {
     }
 
     break;
+    case 6:
 
-            case 6:
-                System.out.println("Logged out successfully.");
-                return;
+    showCourseMenu(scanner);
+
+    break;
+
+            case 7:
+    System.out.println("Logged out successfully.");
+    return;
 
             default:
                 System.out.println("Invalid choice!");
@@ -187,8 +192,95 @@ public static void addStudentMenu(Scanner scanner) {
             dob,
             gender,
             courseId,
-            enrollmentDate);
+            enrollmentDate
+    );
 
     StudentService.addStudent(student);
 }
+
+
+// =================================
+// COURSE MANAGEMENT
+// =================================
+
+public static void showCourseMenu(Scanner scanner) {
+
+    while (true) {
+
+        System.out.println("\n=================================");
+        System.out.println("       COURSE MANAGEMENT");
+        System.out.println("=================================");
+        System.out.println("1. Add Course");
+        System.out.println("2. View Courses");
+        System.out.println("3. Search Course");
+        System.out.println("4. Update Course");
+        System.out.println("5. Delete Course");
+        System.out.println("6. Back to Main Menu");
+
+        System.out.print("\nEnter your choice: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+
+            case 1:
+
+                System.out.println("\n===== Add Course =====");
+
+                System.out.print("Course Name: ");
+                String courseName = scanner.nextLine();
+
+                System.out.print("Duration: ");
+                String duration = scanner.nextLine();
+
+                System.out.print("Fees: ");
+                double fees = scanner.nextDouble();
+                scanner.nextLine();
+
+                Course course = new Course(
+                        courseName,
+                        duration,
+                        fees
+                );
+
+                CourseService.addCourse(course);
+
+                break;
+
+            case 2:
+
+                CourseService.viewCourses();
+
+                break;
+
+            case 3:
+
+                System.out.println("Search Course - Coming Soon");
+
+                break;
+
+            case 4:
+
+                System.out.println("Update Course - Coming Soon");
+
+                break;
+
+            case 5:
+
+                System.out.println("Delete Course - Coming Soon");
+
+                break;
+
+            case 6:
+
+                return;
+
+            default:
+
+                System.out.println("Invalid choice!");
+        }
+    }
+}
+
 }
