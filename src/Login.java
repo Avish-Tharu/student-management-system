@@ -270,10 +270,28 @@ public static void showCourseMenu(Scanner scanner) {
 
             case 4:
 
-                System.out.println("Update Course - Coming Soon");
+    System.out.print("\nEnter Course ID: ");
+    int updateCourseId = scanner.nextInt();
+    scanner.nextLine();
 
-                break;
+    System.out.print("New Course Name: ");
+    String newCourseName = scanner.nextLine();
 
+    System.out.print("New Duration: ");
+    String newDuration = scanner.nextLine();
+
+    System.out.print("New Fees: ");
+    double newFees = scanner.nextDouble();
+    scanner.nextLine();
+
+    UpdateCourseService.updateCourse(
+            updateCourseId,
+            newCourseName,
+            newDuration,
+            newFees
+    );
+
+    break;
             case 5:
 
                 System.out.println("Delete Course - Coming Soon");
