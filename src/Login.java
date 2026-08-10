@@ -294,9 +294,27 @@ public static void showCourseMenu(Scanner scanner) {
     break;
             case 5:
 
-                System.out.println("Delete Course - Coming Soon");
+    System.out.print("\nEnter Course ID: ");
 
-                break;
+    int deleteCourseId = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print(
+            "Are you sure you want to delete this course? (Y/N): "
+    );
+
+    String confirmation = scanner.nextLine();
+
+    if (confirmation.equalsIgnoreCase("Y")) {
+
+        DeleteCourseService.deleteCourse(deleteCourseId);
+
+    } else {
+
+        System.out.println("\n❌ Delete cancelled.");
+    }
+
+    break;
 
             case 6:
 
