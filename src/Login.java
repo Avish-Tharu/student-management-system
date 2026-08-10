@@ -84,8 +84,9 @@ System.out.println("7. Logout");
             case 2:
     ViewStudentService.viewStudents();
     break;
+case 3:
 
-            case 3:
+    
 
     System.out.print("\nEnter Student ID: ");
 
@@ -95,6 +96,8 @@ System.out.println("7. Logout");
     SearchStudentService.searchStudent(studentId);
 
     break;
+            
+    
 
             case 4:
 
@@ -256,9 +259,14 @@ public static void showCourseMenu(Scanner scanner) {
 
             case 3:
 
-                System.out.println("Search Course - Coming Soon");
+    System.out.print("\nEnter Course ID: ");
 
-                break;
+    int searchCourseId = scanner.nextInt();
+    scanner.nextLine();
+
+    SearchCourseService.searchCourse(searchCourseId);
+
+    break;
 
             case 4:
 
