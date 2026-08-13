@@ -69,7 +69,8 @@ System.out.println("3. Search Student");
 System.out.println("4. Update Student");
 System.out.println("5. Delete Student");
 System.out.println("6. Course Management");
-System.out.println("7. Logout");
+System.out.println("7. Grade Management");
+System.out.println("8. Logout");
         System.out.print("\nEnter your choice: ");
 
         int choice = scanner.nextInt();
@@ -150,9 +151,14 @@ case 3:
     break;
 
             case 7:
+
+    showGradeMenu(scanner);
+    break;
+
+case 8:
+
     System.out.println("Logged out successfully.");
     return;
-
             default:
                 System.out.println("Invalid choice!");
         }
@@ -326,5 +332,138 @@ public static void showCourseMenu(Scanner scanner) {
         }
     }
 }
+// =================================
+// GRADE MANAGEMENT
+// =================================
 
+public static void showGradeMenu(Scanner scanner) {
+
+    while (true) {
+
+        System.out.println("\n=================================");
+        System.out.println("        GRADE MANAGEMENT");
+        System.out.println("=================================");
+        System.out.println("1. Add Grade");
+        System.out.println("2. View Grades");
+        System.out.println("3. Search Grade");
+        System.out.println("4. Update Grade");
+        System.out.println("5. Delete Grade");
+        System.out.println("6. Back to Main Menu");
+
+        System.out.print("\nEnter your choice: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+
+            case 1:
+
+                System.out.println("\n===== Add Grade =====");
+
+                System.out.print("Student ID: ");
+                int studentId = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Subject: ");
+                String subject = scanner.nextLine();
+
+                System.out.print("Marks: ");
+                double marks = scanner.nextDouble();
+                scanner.nextLine();
+
+                System.out.print("Semester: ");
+                String semester = scanner.nextLine();
+
+                System.out.print("Grade: ");
+                String gradeValue = scanner.nextLine();
+
+                Grade grade = new Grade(
+                        studentId,
+                        subject,
+                        marks,
+                        semester,
+                        gradeValue
+                );
+
+                GradeService.addGrade(grade);
+
+                break;
+
+            case 2:
+
+    ViewGradeService.viewGrades();
+
+    break;
+
+            case 3:
+
+    System.out.print("\nEnter Grade ID: ");
+
+    int searchGradeId = scanner.nextInt();
+    scanner.nextLine();
+
+    SearchGradeService.searchGrade(searchGradeId);
+
+    break;
+
+            case 4:
+
+    System.out.print("\nEnter Grade ID: ");
+    int updateGradeId = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print("New Marks: ");
+    double newMarks = scanner.nextDouble();
+    scanner.nextLine();
+
+    System.out.print("New Semester: ");
+    String newSemester = scanner.nextLine();
+
+    System.out.print("New Grade: ");
+    String newGrade = scanner.nextLine();
+
+    UpdateGradeService.updateGrade(
+            updateGradeId,
+            newMarks,
+            newSemester,
+            newGrade
+    );
+
+    break;
+
+            case 5:
+
+    System.out.print("\nEnter Grade ID: ");
+
+    int deleteGradeId = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print(
+            "Are you sure you want to delete this grade? (Y/N): "
+    );
+
+    String confirmation = scanner.nextLine();
+
+    if (confirmation.equalsIgnoreCase("Y")) {
+
+        DeleteGradeService.deleteGrade(deleteGradeId);
+
+    } else {
+
+        System.out.println("\n❌ Delete cancelled.");
+    }
+
+    break;
+
+            case 6:
+
+                return;
+
+            default:
+
+                System.out.println("Invalid choice!");
+        }
+    }
+}
 }
