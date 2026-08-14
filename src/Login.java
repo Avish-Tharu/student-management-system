@@ -107,11 +107,40 @@ case 3:
     int updateStudentId = scanner.nextInt();
     scanner.nextLine();
 
-    System.out.print("New Email: ");
-    String email = scanner.nextLine();
+    String email;
 
-    System.out.print("New Phone: ");
-    String phone = scanner.nextLine();
+while (true) {
+
+    System.out.print("Email: ");
+    email = scanner.nextLine().trim();
+
+    if (!InputValidator.isValidEmail(email)) {
+
+        System.out.println("❌ Invalid email format. Please try again.");
+
+    } else {
+
+        break;
+    }
+}
+String phone;
+
+while (true) {
+
+    System.out.print("Phone: ");
+    phone = scanner.nextLine().trim();
+
+    if (!InputValidator.isValidPhone(phone)) {
+
+        System.out.println(
+                "❌ Invalid phone number. Enter exactly 10 digits."
+        );
+
+    } else {
+
+        break;
+    }
+}
 
     System.out.print("New Course ID: ");
     int courseId = scanner.nextInt();
@@ -188,8 +217,24 @@ public static void addStudentMenu(Scanner scanner) {
     System.out.print("Phone: ");
     String phone = scanner.nextLine();
 
+    String dob;
+
+while (true) {
+
     System.out.print("Date of Birth (YYYY-MM-DD): ");
-    String dob = scanner.nextLine();
+    dob = scanner.nextLine().trim();
+
+    if (!InputValidator.isValidDate(dob)) {
+
+        System.out.println(
+                "❌ Invalid date. Please use YYYY-MM-DD."
+        );
+
+    } else {
+
+        break;
+    }
+}
 
     System.out.print("Gender: ");
     String gender = scanner.nextLine();
@@ -198,8 +243,24 @@ public static void addStudentMenu(Scanner scanner) {
     int courseId = scanner.nextInt();
     scanner.nextLine();
 
+    String enrollmentDate;
+
+while (true) {
+
     System.out.print("Enrollment Date (YYYY-MM-DD): ");
-    String enrollmentDate = scanner.nextLine();
+    enrollmentDate = scanner.nextLine().trim();
+
+    if (!InputValidator.isValidDate(enrollmentDate)) {
+
+        System.out.println(
+                "❌ Invalid date. Please use YYYY-MM-DD."
+        );
+
+    } else {
+
+        break;
+    }
+}
 
     Student student = new Student(
             firstName,
@@ -245,15 +306,65 @@ public static void showCourseMenu(Scanner scanner) {
 
                 System.out.println("\n===== Add Course =====");
 
-                System.out.print("Course Name: ");
-                String courseName = scanner.nextLine();
+                String courseName;
 
-                System.out.print("Duration: ");
-                String duration = scanner.nextLine();
+while (true) {
 
-                System.out.print("Fees: ");
-                double fees = scanner.nextDouble();
-                scanner.nextLine();
+    System.out.print("Course Name: ");
+    courseName = scanner.nextLine().trim();
+
+    if (!InputValidator.isNotEmpty(courseName)) {
+
+        System.out.println("❌ Course name cannot be empty.");
+
+    } else {
+
+        break;
+    }
+}
+String duration;
+
+while (true) {
+
+    System.out.print("Duration: ");
+    duration = scanner.nextLine().trim();
+
+    if (!InputValidator.isNotEmpty(duration)) {
+
+        System.out.println("❌ Duration cannot be empty.");
+
+    } else {
+
+        break;
+    }
+}
+double fees;
+
+while (true) {
+
+    System.out.print("Fees: ");
+
+    try {
+
+        fees = scanner.nextDouble();
+        scanner.nextLine();
+
+        if (!InputValidator.isValidFees(fees)) {
+
+            System.out.println("❌ Fees cannot be negative.");
+
+        } else {
+
+            break;
+        }
+
+    } catch (Exception e) {
+
+        System.out.println("❌ Please enter a valid number.");
+
+        scanner.nextLine();
+    }
+}
 
                 Course course = new Course(
                         courseName,
@@ -376,24 +487,78 @@ public static void showGradeMenu(Scanner scanner) {
                 System.out.print("Subject: ");
                 String subject = scanner.nextLine();
 
-                System.out.print("Marks: ");
-                double marks = scanner.nextDouble();
-                scanner.nextLine();
+                double marks;
 
-                System.out.print("Semester: ");
-                String semester = scanner.nextLine();
+while (true) {
 
-                System.out.print("Grade: ");
-                String gradeValue = scanner.nextLine();
+    System.out.print("Marks: ");
 
-                Grade grade = new Grade(
-                        studentId,
-                        subject,
-                        marks,
-                        semester,
-                        gradeValue
-                );
+    try {
 
+        marks = scanner.nextDouble();
+        scanner.nextLine();
+
+        if (!InputValidator.isValidMarks(marks)) {
+
+            System.out.println(
+                    "❌ Marks must be between 0 and 100."
+            );
+
+        } else {
+
+            break;
+        }
+
+    } catch (Exception e) {
+
+        System.out.println("❌ Please enter a valid number.");
+
+        scanner.nextLine();
+    }
+}
+
+                String semester;
+
+while (true) {
+
+    System.out.print("Semester: ");
+    semester = scanner.nextLine().trim();
+
+    if (!InputValidator.isNotEmpty(semester)) {
+
+        System.out.println("❌ Semester cannot be empty.");
+
+    } else {
+
+        break;
+    }
+}
+
+
+                String gradeValue;
+
+while (true) {
+
+    System.out.print("Grade: ");
+    gradeValue = scanner.nextLine().trim();
+
+    if (!InputValidator.isNotEmpty(gradeValue)) {
+
+        System.out.println("❌ Grade cannot be empty.");
+
+    } else {
+
+        break;
+    }
+}
+
+Grade grade = new Grade(
+        studentId,
+        subject,
+        marks,
+        semester,
+        gradeValue
+);
                 GradeService.addGrade(grade);
 
                 break;
