@@ -70,7 +70,8 @@ System.out.println("4. Update Student");
 System.out.println("5. Delete Student");
 System.out.println("6. Course Management");
 System.out.println("7. Grade Management");
-System.out.println("8. Logout");
+System.out.println("8. Dashboard");
+System.out.println("9. Logout");
         System.out.print("\nEnter your choice: ");
 
         int choice = scanner.nextInt();
@@ -153,9 +154,16 @@ case 3:
             case 7:
 
     showGradeMenu(scanner);
+
     break;
 
 case 8:
+
+    DashboardService.showDashboard();
+
+    break;
+
+case 9:
 
     System.out.println("Logged out successfully.");
     return;
