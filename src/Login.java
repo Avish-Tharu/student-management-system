@@ -72,10 +72,12 @@ System.out.println("6. Course Management");
 System.out.println("7. Grade Management");
 System.out.println("8. Dashboard");
 System.out.println("9. Logout");
-        System.out.print("\nEnter your choice: ");
+        
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = InputHelper.readInt(
+        scanner,
+        "\nEnter your choice: "
+);
 
         switch (choice) {
 
@@ -90,10 +92,10 @@ case 3:
 
     
 
-    System.out.print("\nEnter Student ID: ");
-
-    int studentId = scanner.nextInt();
-    scanner.nextLine();
+    int studentId = InputHelper.readInt(
+        scanner,
+        "\nEnter Student ID: "
+);
 
     SearchStudentService.searchStudent(studentId);
 
@@ -103,9 +105,10 @@ case 3:
 
             case 4:
 
-    System.out.print("\nEnter Student ID: ");
-    int updateStudentId = scanner.nextInt();
-    scanner.nextLine();
+    int updateStudentId = InputHelper.readInt(
+        scanner,
+        "\nEnter Student ID: "
+);
 
     String email;
 
@@ -142,9 +145,10 @@ while (true) {
     }
 }
 
-    System.out.print("New Course ID: ");
-    int courseId = scanner.nextInt();
-    scanner.nextLine();
+    int courseId = InputHelper.readInt(
+        scanner,
+        "Enter Course ID: "
+);
 
     UpdateStudentService.updateStudent(
            updateStudentId,
@@ -157,9 +161,10 @@ while (true) {
 
             case 5:
 
-    System.out.print("\nEnter Student ID: ");
-    int deleteStudentId = scanner.nextInt();
-    scanner.nextLine();
+    int deleteStudentId = InputHelper.readInt(
+        scanner,
+        "\nEnter Student ID: "
+);
 
     System.out.print("Are you sure you want to delete this student? (Y/N): ");
     String confirmation = scanner.nextLine();
@@ -239,10 +244,10 @@ while (true) {
     System.out.print("Gender: ");
     String gender = scanner.nextLine();
 
-    System.out.print("Course ID: ");
-    int courseId = scanner.nextInt();
-    scanner.nextLine();
-
+    int courseId = InputHelper.readInt(
+        scanner,
+        "Course ID: "
+);
     String enrollmentDate;
 
 while (true) {
@@ -295,10 +300,10 @@ public static void showCourseMenu(Scanner scanner) {
         System.out.println("5. Delete Course");
         System.out.println("6. Back to Main Menu");
 
-        System.out.print("\nEnter your choice: ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = InputHelper.readInt(
+        scanner,
+        "\nEnter your choice: "
+);
 
         switch (choice) {
 
@@ -384,21 +389,20 @@ while (true) {
 
             case 3:
 
-    System.out.print("\nEnter Course ID: ");
-
-    int searchCourseId = scanner.nextInt();
-    scanner.nextLine();
-
+    int searchCourseId = InputHelper.readInt(
+        scanner,
+        "\nEnter Course ID: "
+);
     SearchCourseService.searchCourse(searchCourseId);
 
     break;
 
             case 4:
 
-    System.out.print("\nEnter Course ID: ");
-    int updateCourseId = scanner.nextInt();
-    scanner.nextLine();
-
+    int updateCourseId = InputHelper.readInt(
+        scanner,
+        "\nEnter Course ID: "
+);
     System.out.print("New Course Name: ");
     String newCourseName = scanner.nextLine();
 
@@ -419,10 +423,10 @@ while (true) {
     break;
             case 5:
 
-    System.out.print("\nEnter Course ID: ");
-
-    int deleteCourseId = scanner.nextInt();
-    scanner.nextLine();
+    int deleteCourseId = InputHelper.readInt(
+        scanner,
+        "\nEnter Course ID: "
+);
 
     System.out.print(
             "Are you sure you want to delete this course? (Y/N): "
@@ -469,21 +473,20 @@ public static void showGradeMenu(Scanner scanner) {
         System.out.println("5. Delete Grade");
         System.out.println("6. Back to Main Menu");
 
-        System.out.print("\nEnter your choice: ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
+        int choice = InputHelper.readInt(
+        scanner,
+        "\nEnter your choice: "
+);
         switch (choice) {
 
             case 1:
 
                 System.out.println("\n===== Add Grade =====");
 
-                System.out.print("Student ID: ");
-                int studentId = scanner.nextInt();
-                scanner.nextLine();
-
+                int studentId = InputHelper.readInt(
+        scanner,
+        "Student ID: "
+);
                 System.out.print("Subject: ");
                 String subject = scanner.nextLine();
 
@@ -640,3 +643,4 @@ Grade grade = new Grade(
     }
 }
 }
+
