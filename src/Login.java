@@ -30,21 +30,23 @@ public class Login {
 
             ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
+      if (rs.next()) {
 
-                System.out.println("\n✅ Login Successful!");
-System.out.println("Welcome " + username + "!");
+    String role = rs.getString("role");
 
-showMainMenu();
+    System.out.println("\n✅ Login Successful!");
+    System.out.println("Welcome " + username + "!");
+    System.out.println("Role: " + role);
 
-return true;
+    showMainMenu(role);
 
-            } else {
+    return true;
 
-                System.out.println("\n❌ Invalid Username or Password.");
-                return false;
+} else {
 
-            }
+    System.out.println("\n❌ Invalid Username or Password.");
+    return false;
+}
 
         } catch (Exception e) {
 
@@ -54,7 +56,7 @@ return true;
         }
 
     }
-public static void showMainMenu() {
+public static void showMainMenu(String role) {
 
     Scanner scanner = new Scanner(System.in);
 
@@ -70,8 +72,13 @@ System.out.println("4. Update Student");
 System.out.println("5. Delete Student");
 System.out.println("6. Course Management");
 System.out.println("7. Grade Management");
-System.out.println("8. Dashboard");
-System.out.println("9. Logout");
+
+if (role.equalsIgnoreCase("ADMIN")) {
+    System.out.println("8. Admin Dashboard");
+    System.out.println("9. Logout");
+} else {
+    System.out.println("8. Logout");
+}
         
 
         int choice = InputHelper.readInt(
@@ -193,16 +200,36 @@ while (true) {
 
 case 8:
 
-    DashboardService.showDashboard();
+    if (role.equalsIgnoreCase("ADMIN")) {
+
+        DashboardService.showDashboard();
+
+    } else {
+
+        System.out.println("Logged out successfully.");
+        return;
+    }
 
     break;
 
 case 9:
 
-    System.out.println("Logged out successfully.");
-    return;
-            default:
-                System.out.println("Invalid choice!");
+    if (role.equalsIgnoreCase("ADMIN")) {
+
+        System.out.println("Logged out successfully.");
+        return;
+
+    } else {
+
+        System.out.println("Invalid choice!");
+    }
+
+    break;
+
+default:
+
+    System.out.println("Invalid choice!");
+
         }
     }
 }
