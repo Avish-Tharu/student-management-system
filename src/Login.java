@@ -21,12 +21,14 @@ public class Login {
 
             Connection conn = DatabaseConnection.getConnection();
 
-            String sql = "SELECT * FROM users WHERE username=? AND password=?";
+            String hashedPassword = PasswordUtil.hashPassword(password);
 
-            PreparedStatement pst = conn.prepareStatement(sql);
+String sql = "SELECT * FROM users WHERE username=? AND password=?";
 
-            pst.setString(1, username);
-            pst.setString(2, password);
+PreparedStatement pst = conn.prepareStatement(sql);
+
+pst.setString(1, username);
+pst.setString(2, hashedPassword);
 
             ResultSet rs = pst.executeQuery();
 
