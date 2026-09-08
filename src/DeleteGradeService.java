@@ -7,11 +7,10 @@ public class DeleteGradeService {
 
         String sql = "DELETE FROM grades WHERE grade_id = ?";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setInt(1, gradeId);
 
@@ -26,13 +25,9 @@ public class DeleteGradeService {
                 System.out.println("\n❌ Grade not found.");
             }
 
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to delete grade.");
-            e.printStackTrace();
         }
     }
 }

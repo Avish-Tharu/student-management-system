@@ -9,13 +9,11 @@ public class ViewGradeService {
         String sql = "SELECT grade_id, student_id, subject, marks, semester, grade " +
                      "FROM grades ORDER BY grade_id";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
             PreparedStatement pst = conn.prepareStatement(sql);
-
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery()
+        ) {
 
             System.out.println("\n==============================================================");
             System.out.println("                         ALL GRADES");
@@ -56,14 +54,9 @@ public class ViewGradeService {
 
             System.out.println("==============================================================");
 
-            rs.close();
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to retrieve grades.");
-            e.printStackTrace();
         }
     }
 }

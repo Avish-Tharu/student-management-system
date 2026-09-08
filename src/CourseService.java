@@ -8,11 +8,10 @@ public class CourseService {
 
         String sql = "INSERT INTO courses (course_name, duration, fees) VALUES (?, ?, ?)";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setString(1, course.getCourseName());
             pst.setString(2, course.getDuration());
@@ -24,13 +23,9 @@ public class CourseService {
                 System.out.println("\n✅ Course added successfully!");
             }
 
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to add course.");
-            e.printStackTrace();
         }
     }
 
@@ -38,13 +33,11 @@ public class CourseService {
 
         String sql = "SELECT course_id, course_name, duration, fees FROM courses";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
             PreparedStatement pst = conn.prepareStatement(sql);
-
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery()
+        ) {
 
             System.out.println("\n==============================================================");
             System.out.println("                      ALL COURSES");
@@ -78,14 +71,9 @@ public class CourseService {
 
             System.out.println("==============================================================");
 
-            rs.close();
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to retrieve courses.");
-            e.printStackTrace();
         }
     }
 }

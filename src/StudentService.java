@@ -5,13 +5,15 @@ public class StudentService {
 
     public static void addStudent(Student student) {
 
-        String sql = "INSERT INTO students (first_name, last_name, email, phone, date_of_birth, gender, course_id, enrollment_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO students " +
+                     "(first_name, last_name, email, phone, date_of_birth, " +
+                     "gender, course_id, enrollment_date) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setString(1, student.getFirstName());
             pst.setString(2, student.getLastName());
@@ -25,16 +27,17 @@ public class StudentService {
             int rows = pst.executeUpdate();
 
             if (rows > 0) {
+
                 System.out.println("\n✅ Student added successfully!");
+
             } else {
+
                 System.out.println("\n❌ Failed to add student.");
             }
 
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
+
+            System.out.println("\n❌ Failed to add student.");
         }
     }
 }

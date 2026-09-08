@@ -13,11 +13,10 @@ public class UpdateGradeService {
                      "SET marks = ?, semester = ?, grade = ? " +
                      "WHERE grade_id = ?";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setDouble(1, marks);
             pst.setString(2, semester);
@@ -35,13 +34,9 @@ public class UpdateGradeService {
                 System.out.println("\n❌ Grade not found.");
             }
 
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to update grade.");
-            e.printStackTrace();
         }
     }
 }

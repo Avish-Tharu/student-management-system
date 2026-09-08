@@ -10,13 +10,11 @@ public class ViewStudentService {
                      "date_of_birth, gender, course_id, enrollment_date " +
                      "FROM students";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
             PreparedStatement pst = conn.prepareStatement(sql);
-
-            ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery()
+        ) {
 
             System.out.println("\n==========================================================================");
             System.out.println("                         ALL STUDENTS");
@@ -52,14 +50,9 @@ public class ViewStudentService {
 
             System.out.println("==========================================================================");
 
-            rs.close();
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("❌ Failed to retrieve students.");
-            e.printStackTrace();
         }
     }
 }

@@ -9,11 +9,10 @@ public class GradeService {
                 "(student_id, subject, marks, semester, grade) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setInt(1, grade.getStudentId());
             pst.setString(2, grade.getSubject());
@@ -32,13 +31,9 @@ public class GradeService {
                 System.out.println("\n❌ Failed to add grade.");
             }
 
-            pst.close();
-            conn.close();
-
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to add grade.");
-            e.printStackTrace();
         }
     }
 }

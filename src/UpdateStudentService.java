@@ -12,11 +12,10 @@ public class UpdateStudentService {
         String sql = "UPDATE students SET email = ?, phone = ?, course_id = ? " +
                      "WHERE student_id = ?";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setString(1, email);
             pst.setString(2, phone);
@@ -32,16 +31,11 @@ public class UpdateStudentService {
             } else {
 
                 System.out.println("\n❌ Student not found.");
-
             }
-
-            pst.close();
-            conn.close();
 
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to update student.");
-            e.printStackTrace();
         }
     }
 }

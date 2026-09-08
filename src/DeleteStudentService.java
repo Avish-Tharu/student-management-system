@@ -7,11 +7,10 @@ public class DeleteStudentService {
 
         String sql = "DELETE FROM students WHERE student_id = ?";
 
-        try {
-
+        try (
             Connection conn = DatabaseConnection.getConnection();
-
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql)
+        ) {
 
             pst.setInt(1, studentId);
 
@@ -24,16 +23,11 @@ public class DeleteStudentService {
             } else {
 
                 System.out.println("\n❌ Student not found.");
-
             }
-
-            pst.close();
-            conn.close();
 
         } catch (Exception e) {
 
             System.out.println("\n❌ Failed to delete student.");
-            e.printStackTrace();
         }
     }
 }

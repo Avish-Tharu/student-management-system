@@ -5,22 +5,36 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     // Database URL
-    private static final String URL = "jdbc:mysql://127.0.0.1:3307/student_management_system";
+    private static final String URL =
+            "jdbc:mysql://127.0.0.1:3307/student_management_system";
+
     // MySQL Username
     private static final String USER = "root";
 
     // MySQL Password
     private static final String PASSWORD = "10201209";
 
-    // Method to establish connection
+    // Establish database connection
     public static Connection getConnection() {
+
         try {
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            
-            return connection;
+
+            return DriverManager.getConnection(
+                    URL,
+                    USER,
+                    PASSWORD
+            );
+
         } catch (SQLException e) {
-            System.out.println("❌ Connection failed!");
-            e.printStackTrace();
+
+            System.out.println(
+                    "❌ Unable to connect to the database."
+            );
+
+            System.out.println(
+                    "Please check that MySQL is running."
+            );
+
             return null;
         }
     }
