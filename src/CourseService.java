@@ -6,26 +6,60 @@ public class CourseService {
 
     public static void addCourse(Course course) {
 
-        String sql = "INSERT INTO courses (course_name, duration, fees) VALUES (?, ?, ?)";
+        String checkSql = "SELECT course_id FROM courses WHERE course_name = ?";
+
+        String insertSql = "INSERT INTO courses " +
+                           "(course_name, duration, fees) " +
+                           "VALUES (?, ?, ?)";
 
         try (
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)
+            PreparedStatement checkPst = conn.prepareStatement(checkSql)
         ) {
 
-            pst.setString(1, course.getCourseName());
-            pst.setString(2, course.getDuration());
-            pst.setDouble(3, course.getFees());
+            // Check whether course already exists
+            checkPst.setString(1, course.getCourseName());
 
-            int rowsInserted = pst.executeUpdate();
+            try (ResultSet rs = checkPst.executeQuery()) {
 
-            if (rowsInserted > 0) {
-                System.out.println("\n✅ Course added successfully!");
+                if (rs.next()) {
+
+                    System.out.println(
+                            "\n❌ A course with this name already exists."
+                    );
+
+                    return;
+                }
+            }
+
+            // Insert new course
+            try (PreparedStatement pst = conn.prepareStatement(insertSql)) {
+
+                pst.setString(1, course.getCourseName());
+                pst.setString(2, course.getDuration());
+                pst.setDouble(3, course.getFees());
+
+                int rowsInserted = pst.executeUpdate();
+
+                if (rowsInserted > 0) {
+
+                    System.out.println(
+                            "\n✅ Course added successfully!"
+                    );
+
+                } else {
+
+                    System.out.println(
+                            "\n❌ Failed to add course."
+                    );
+                }
             }
 
         } catch (Exception e) {
 
-            System.out.println("\n❌ Failed to add course.");
+            System.out.println(
+                    "\n❌ Failed to add course."
+            );
         }
     }
 

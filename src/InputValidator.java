@@ -8,7 +8,23 @@ public class InputValidator {
 
         return value != null && !value.trim().isEmpty();
     }
+// Validate person name
+public static boolean isValidName(String name) {
 
+    return name != null &&
+           name.matches("[A-Za-z]+([ '-][A-Za-z]+)*");
+}
+// Validate gender
+public static boolean isValidGender(String gender) {
+
+    if (gender == null) {
+        return false;
+    }
+
+    return gender.equalsIgnoreCase("Male") ||
+           gender.equalsIgnoreCase("Female") ||
+           gender.equalsIgnoreCase("Other");
+}
     // Validate email
     public static boolean isValidEmail(String email) {
 
@@ -34,6 +50,37 @@ public class InputValidator {
 
         return fees >= 0;
     }
+
+    // Validate grade
+    public static boolean isValidGrade(String grade) {
+
+        if (grade == null) {
+            return false;
+        }
+
+        return grade.equals("A+") ||
+               grade.equals("A") ||
+               grade.equals("A-") ||
+               grade.equals("B+") ||
+               grade.equals("B") ||
+               grade.equals("B-") ||
+               grade.equals("C+") ||
+               grade.equals("C") ||
+               grade.equals("C-") ||
+               grade.equals("D") ||
+               grade.equals("F");
+    }
+    // Validate semester
+public static boolean isValidSemester(String semester) {
+
+    if (semester == null) {
+        return false;
+    }
+
+    return semester.matches(
+            "Semester [1-8]"
+    );
+}
 
     // Validate date
     public static boolean isValidDate(String date) {

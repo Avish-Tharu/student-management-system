@@ -1,43 +1,96 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class StudentService {
 
     public static void addStudent(Student student) {
 
-        String sql = "INSERT INTO students " +
-                     "(first_name, last_name, email, phone, date_of_birth, " +
-                     "gender, course_id, enrollment_date) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String checkEmailSql =
+                "SELECT student_id FROM students WHERE email = ?";
 
-        try (
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
+        String checkCourseSql =
+                "SELECT course_id FROM courses WHERE course_id = ?";
 
-            pst.setString(1, student.getFirstName());
-            pst.setString(2, student.getLastName());
-            pst.setString(3, student.getEmail());
-            pst.setString(4, student.getPhone());
-            pst.setString(5, student.getDateOfBirth());
-            pst.setString(6, student.getGender());
-            pst.setInt(7, student.getCourseId());
-            pst.setString(8, student.getEnrollmentDate());
+        String insertSql = "INSERT INTO students " +
+                           "(first_name, last_name, email, phone, date_of_birth, " +
+                           "gender, course_id, enrollment_date) " +
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-            int rows = pst.executeUpdate();
+        try (Connection conn = DatabaseConnection.getConnection()) {
 
-            if (rows > 0) {
+            // Check whether email already exists
+            try (PreparedStatement checkEmailPst =
+                         conn.prepareStatement(checkEmailSql)) {
 
-                System.out.println("\n✅ Student added successfully!");
+                checkEmailPst.setString(1, student.getEmail());
 
-            } else {
+                try (ResultSet rs = checkEmailPst.executeQuery()) {
 
-                System.out.println("\n❌ Failed to add student.");
+                    if (rs.next()) {
+
+                        System.out.println(
+                                "\n❌ A student with this email already exists."
+                        );
+
+                        return;
+                    }
+                }
+            }
+
+            // Check whether course exists
+            try (PreparedStatement checkCoursePst =
+                         conn.prepareStatement(checkCourseSql)) {
+
+                checkCoursePst.setInt(1, student.getCourseId());
+
+                try (ResultSet rs = checkCoursePst.executeQuery()) {
+
+                    if (!rs.next()) {
+
+                        System.out.println(
+                                "\n❌ Course not found. Please enter a valid Course ID."
+                        );
+
+                        return;
+                    }
+                }
+            }
+
+            // Insert new student
+            try (PreparedStatement pst =
+                         conn.prepareStatement(insertSql)) {
+
+                pst.setString(1, student.getFirstName());
+                pst.setString(2, student.getLastName());
+                pst.setString(3, student.getEmail());
+                pst.setString(4, student.getPhone());
+                pst.setString(5, student.getDateOfBirth());
+                pst.setString(6, student.getGender());
+                pst.setInt(7, student.getCourseId());
+                pst.setString(8, student.getEnrollmentDate());
+
+                int rows = pst.executeUpdate();
+
+                if (rows > 0) {
+
+                    System.out.println(
+                            "\n✅ Student added successfully!"
+                    );
+
+                } else {
+
+                    System.out.println(
+                            "\n❌ Failed to add student."
+                    );
+                }
             }
 
         } catch (Exception e) {
 
-            System.out.println("\n❌ Failed to add student.");
+            System.out.println(
+                    "\n❌ Failed to add student."
+            );
         }
     }
 }
