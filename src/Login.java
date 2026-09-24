@@ -99,17 +99,111 @@ if (role.equalsIgnoreCase("ADMIN")) {
     break;
 case 3:
 
-    
+    while (true) {
 
-    int studentId = InputHelper.readInt(
-        scanner,
-        "\nEnter Student ID: "
-);
+        System.out.println("\n=================================");
+        System.out.println("          SEARCH STUDENT");
+        System.out.println("=================================");
+        System.out.println("1. Search by Student ID");
+        System.out.println("2. Search by Name");
+        System.out.println("3. Search by Email");
+        System.out.println("4. Search by Course");
+        System.out.println("5. Back");
 
-    SearchStudentService.searchStudent(studentId);
+        int searchChoice = InputHelper.readInt(
+                scanner,
+                "Enter your choice: "
+        );
+
+        switch (searchChoice) {
+
+            case 1:
+
+                int studentId = InputHelper.readInt(
+                        scanner,
+                        "\nEnter Student ID: "
+                );
+
+                SearchStudentService.searchStudent(studentId);
+
+                break;
+
+            case 2:
+
+                String name;
+
+                while (true) {
+
+                    System.out.print("\nEnter student name: ");
+                    name = scanner.nextLine().trim();
+
+                    if (!InputValidator.isNotEmpty(name)) {
+
+                        System.out.println(
+                                "❌ Name cannot be empty."
+                        );
+
+                    } else {
+
+                        break;
+                    }
+                }
+
+                SearchStudentService.searchStudentByName(name);
+
+                break;
+            case 3:
+
+    String email;
+
+    while (true) {
+
+        System.out.print("\nEnter student email: ");
+        email = scanner.nextLine().trim();
+
+        if (!InputValidator.isValidEmail(email)) {
+
+            System.out.println(
+                    "❌ Invalid email format. Please try again."
+            );
+
+        } else {
+
+            break;
+        }
+    }
+
+    SearchStudentService.searchStudentByEmail(email);
 
     break;
-            
+case 4:
+
+    int courseId = InputHelper.readInt(
+            scanner,
+            "\nEnter Course ID: "
+    );
+
+    SearchStudentService.searchStudentByCourse(courseId);
+
+    break;
+            case 5:
+
+    System.out.println("\nReturning to Main Menu...");
+    break;
+
+            default:
+
+                System.out.println(
+                        "\n❌ Invalid choice. Please try again."
+                );
+        }
+
+        if (searchChoice == 5) {
+            break;
+        }
+    }
+
+    break;
     
 
             case 4:
