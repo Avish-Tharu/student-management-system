@@ -110,4 +110,74 @@ public class CourseService {
             System.out.println("\n❌ Failed to retrieve courses.");
         }
     }
+    public static void updateCourse(
+        int courseId,
+        String courseName,
+        String duration,
+        double fees) {
+
+    String checkSql =
+            "SELECT course_id FROM courses " +
+            "WHERE course_name = ? AND course_id <> ?";
+
+    String updateSql =
+            "UPDATE courses " +
+            "SET course_name = ?, duration = ?, fees = ? " +
+            "WHERE course_id = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection()) {
+
+        // Check whether another course already uses this name
+        try (PreparedStatement checkPst =
+                     conn.prepareStatement(checkSql)) {
+
+            checkPst.setString(1, courseName);
+            checkPst.setInt(2, courseId);
+
+            try (ResultSet rs = checkPst.executeQuery()) {
+
+                if (rs.next()) {
+
+                    System.out.println(
+                            "\n❌ Another course with this name already exists."
+                    );
+
+                    return;
+                }
+            }
+        }
+
+        // Update course
+        try (PreparedStatement pst =
+                     conn.prepareStatement(updateSql)) {
+
+            pst.setString(1, courseName);
+            pst.setString(2, duration);
+            pst.setDouble(3, fees);
+            pst.setInt(4, courseId);
+
+            int rowsUpdated = pst.executeUpdate();
+
+            if (rowsUpdated > 0) {
+
+                System.out.println(
+                        "\n✅ Course updated successfully!"
+                );
+
+            } else {
+
+                System.out.println(
+                        "\n❌ Course not found."
+                );
+            }
+        }
+
+    } catch (Exception e) {
+
+        System.out.println(
+                "\n❌ Failed to update course."
+        );
+    }
+}
+
 }
