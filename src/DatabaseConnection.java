@@ -11,29 +11,33 @@ public class DatabaseConnection {
     // MySQL Username
     private static final String USER = "root";
 
-    // MySQL Password
-    private static final String PASSWORD = "10201209";
+    // MySQL Password is read from an environment variable
+    private static final String PASSWORD =
+            System.getenv("SMS_DB_PASSWORD");
 
-    // Establish database connection
+    // Method to establish connection
     public static Connection getConnection() {
+
+        if (PASSWORD == null || PASSWORD.isEmpty()) {
+
+            System.out.println(
+                    "❌ Database password is not configured."
+            );
+
+            return null;
+        }
 
         try {
 
-            return DriverManager.getConnection(
-                    URL,
-                    USER,
-                    PASSWORD
-            );
+            Connection connection =
+                    DriverManager.getConnection(URL, USER, PASSWORD);
+
+            return connection;
 
         } catch (SQLException e) {
 
-            System.out.println(
-                    "❌ Unable to connect to the database."
-            );
-
-            System.out.println(
-                    "Please check that MySQL is running."
-            );
+            System.out.println("❌ Connection failed!");
+            e.printStackTrace();
 
             return null;
         }
